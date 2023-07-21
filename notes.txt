@@ -1,0 +1,4 @@
+# Valentine Machine:
+  check the ssl vulnerability, got the ssh-hey
+  check the bash history: $ cat ~/.bash_history
+  learn tmux -h
