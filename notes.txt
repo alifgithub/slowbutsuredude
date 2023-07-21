@@ -2,3 +2,9 @@
   check the ssl vulnerability, got the ssh-hey
   check the bash history: $ cat ~/.bash_history
   learn tmux -h
+
+# Poison Machine:
+  check LFI vulnerability
+  crack th e passwd backup
+  check vnc viewer on linpeas, OR
+  check the command injection in User Agent
