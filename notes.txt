@@ -8,3 +8,15 @@
   crack th e passwd backup
   check vnc viewer on linpeas, OR
   check the command injection in User Agent
+
+# Sunday Machine:
+  find finger exploit
+  change user sunny to sammy
+  check sudo -l
+
+# Brainfuck Machine:
+  try wpscan 
+  check smpt creds
+  create id_rsa using orestis data
+  learn RSA decrypt 
+  
