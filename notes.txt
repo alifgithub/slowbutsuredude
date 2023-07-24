@@ -1,3 +1,5 @@
+Run fast nmap scan: nmap -p- T5 -oA ip
+
 # Valentine Machine:
   check the ssl vulnerability, got the ssh-hey
   check the bash history: $ cat ~/.bash_history
@@ -26,5 +28,12 @@
   learn schedule service
 
 # Nineveh Machine:
+  check ssl cert
+  try hydra
+  command inject php
+  check procmon service 
   
-  
+# Solidstate Machine:
+  check nc to 4555
+  learn dash service
+  check james server vuln
