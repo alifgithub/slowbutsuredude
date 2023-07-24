@@ -19,4 +19,12 @@
   check smpt creds
   create id_rsa using orestis data
   learn RSA decrypt 
+
+# Cronos Machine:
+  check dns with nslookup, dig axfr
+  do sql injection, then command injection 
+  learn schedule service
+
+# Nineveh Machine:
+  
   
