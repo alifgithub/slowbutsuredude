@@ -1,4 +1,6 @@
 Run fast nmap scan: nmap -p- T5 -oA ip
+clear commandL export TERM=xterm-color
+Download linenum.sh
 
 # Valentine Machine:
   check the ssl vulnerability, got the ssh-hey
@@ -42,3 +44,11 @@ Run fast nmap scan: nmap -p- T5 -oA ip
   check command injection
   upload shell 
   use impacket-secretdump
+  check wget exploit
+
+# Tatarsause Machine:
+  upload file
+  find . -writable
+  sudo -l
+  check backuperer timer service
+  
