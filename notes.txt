@@ -37,3 +37,8 @@ Run fast nmap scan: nmap -p- T5 -oA ip
   check nc to 4555
   learn dash service
   check james server vuln
+
+# Kotarak Machine:
+  check command injection
+  upload shell 
+  use impacket-secretdump
