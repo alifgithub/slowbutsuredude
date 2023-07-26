@@ -51,4 +51,14 @@ Download linenum.sh
   find . -writable
   sudo -l
   check backuperer timer service
+
+# Blue Machine:
+  check port 445
+  exploit the ethernal blue
+
+# Devel Machine:
+  ftp login, upload aspx
+  exploit kitrapod
+  
+  
   
