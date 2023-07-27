@@ -1,6 +1,8 @@
 Run fast nmap scan: nmap -p- T5 -oA ip
 clear commandL export TERM=xterm-color
 Download linenum.sh
+Donwload sherlock.ps1
+Alwasys check the searchploit 
 
 # Valentine Machine:
   check the ssl vulnerability, got the ssh-hey
@@ -60,5 +62,13 @@ Download linenum.sh
   ftp login, upload aspx
   exploit kitrapod
   
+# Optimum Machine:
+  command injection, reverse with invoke-powershell, MS16032
+  enumerate using sherlok.ps1 (rejetto)
   
+# Bastard Machine:
+  try to use droopescan
+  default drupal, changelog.txt
+  command injection
+  checking with powerup
   
