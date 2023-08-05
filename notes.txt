@@ -3,6 +3,7 @@ clear commandL export TERM=xterm-color
 Download linenum.sh
 Donwload sherlock.ps1
 Alwasys check the searchploit 
+Try ODAT
 
 # Valentine Machine:
   check the ssl vulnerability, got the ssh-hey
@@ -71,4 +72,9 @@ Alwasys check the searchploit
   default drupal, changelog.txt
   command injection
   checking with powerup
+
+# Silo Machine:
+  upload aspx file
+  command injeaction
+  learn volatility vulnerability
   
