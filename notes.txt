@@ -88,4 +88,15 @@ find . | grep -i tomcat
   upload file .war
   upload jsp shell > war
   learn silenttrinity for reverse
+
+# Jeeves Machine:
+  check jenkins path directory
+  put command injection
+  Invoke-ALlChecks -> SeImpersonatePrivilege
+
+# Bart Machine:
+  check sourcecode page
+  command injection, check also on user-agent
+  Invoke-ALlChecks -> SeImpersonatePrivilege
+  
   
