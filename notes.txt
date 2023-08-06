@@ -4,6 +4,7 @@ Download linenum.sh
 Donwload sherlock.ps1
 Alwasys check the searchploit 
 Try ODAT
+find . | grep -i tomcat
 
 # Valentine Machine:
   check the ssl vulnerability, got the ssh-hey
@@ -77,4 +78,14 @@ Try ODAT
   upload aspx file
   command injeaction
   learn volatility vulnerability
+
+# Bounty Machine:
+  upload .config file
+  learn merlin tools
+  use exploit/windows/local/ms10_092_scelevator
+
+# Jerry Machine:
+  upload file .war
+  upload jsp shell > war
+  learn silenttrinity for reverse
   
