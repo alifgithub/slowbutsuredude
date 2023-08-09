@@ -99,4 +99,11 @@ find . | grep -i tomcat
   command injection, check also on user-agent
   Invoke-ALlChecks -> SeImpersonatePrivilege
   
-  
+# Falafel Machine:
+  use sqlmap to get creds
+  upload gif to shell (using name 232 char .php.gif
+  command injection
+  find connection.php file, then use ssh to enter with the creds
+  6 disk -> cd /dev
+  strings /dev/sda1 | grep root.txt
+  find debugfs
