@@ -107,3 +107,7 @@ find . | grep -i tomcat
   6 disk -> cd /dev
   strings /dev/sda1 | grep root.txt
   find debugfs
+
+# Devoops Machine:
+  upload file
+  got the creds, use base64 and use it
