@@ -120,5 +120,16 @@ find . | grep -i tomcat
   use xp_cmdshell "command", go
   find go file and compile
   upload by FTP and run
+
+# Hawk Machine:
+  login anon ftp, find openssl enc
+  try bruteforce-openssl-salted
+  openssl enc -aes-256-cbc -d -in encrypted -out decrypted -k friends
+  try droopescan
+  reverse shell on create article
+  cat ./sites/default/settings.php | grep -i pass|grep
+  port forwarding
+  searchploit h2, run the exploit
+  command injection, reverse got the root user
   
   
