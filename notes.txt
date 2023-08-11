@@ -111,3 +111,12 @@ find . | grep -i tomcat
 # Devoops Machine:
   upload file
   got the creds, use base64 and use it
+
+# Tally Machine:
+  got FTP cred
+  wget -- mirror 'ftp://ftp_user:pass@tally.htb.local'
+  find kdbx file for hash crack
+  find sqsh creds
+  use xp_cmdshell "command", go
+  
+  
