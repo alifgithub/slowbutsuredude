@@ -118,5 +118,7 @@ find . | grep -i tomcat
   find kdbx file for hash crack
   find sqsh creds
   use xp_cmdshell "command", go
+  find go file and compile
+  upload by FTP and run
   
   
