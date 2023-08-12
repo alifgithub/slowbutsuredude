@@ -131,5 +131,12 @@ find . | grep -i tomcat
   port forwarding
   searchploit h2, run the exploit
   command injection, reverse got the root user
-  
+
+# Conceal Machine:
+  try snmpwalk -c public -v2c ip
+  try snmp-check
+  try ike-scan
+  config : 33:05
+  ftp login, put file
+  ImpersonateToken
   
