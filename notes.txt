@@ -1,4 +1,5 @@
-Run fast nmap scan: nmap -p- T5 -oA ip
+Run fast nmap scan: nmap -p- T5 -oA ip OR nmap -v
+Complete nmap : nmap -sC -sV -oA
 clear commandL export TERM=xterm-color
 Download linenum.sh
 Donwload sherlock.ps1
@@ -154,3 +155,10 @@ find . | grep -i tomcat
   test | powershell -enc paste
 
 # Friendzone Machine:
+  searchploit vsftpd
+  run smbmap -H ip -R --depth 5
+  add host dns
+  command injection on administrator1 domain, reverse shell by upload in ftp Development
+  find mysql data creds
+  find /usr/lin/python2/os.py excuted by root
+  
