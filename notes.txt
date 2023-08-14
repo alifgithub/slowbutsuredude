@@ -161,4 +161,14 @@ find . | grep -i tomcat
   command injection on administrator1 domain, reverse shell by upload in ftp Development
   find mysql data creds
   find /usr/lin/python2/os.py excuted by root
+
+# Lacasadepapel Machine:
+  try rlwrap nc ip 6200
+  got the CA key
+  got the CA crt
+  complete the ssl cert
+  command injection on url
+  got the ssh private key
+  exploit memcached.ini
+    
   
