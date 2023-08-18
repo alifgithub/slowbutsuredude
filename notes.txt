@@ -182,6 +182,6 @@ ncat -lvnp 9001 > backup.7z
   linenum, tcpdump gtfobin
   intercept using wireshark
   check openssl by gtfobin
-  check sudoers, add owned user and local ip
+  check /etc/sudoers, add owned user and local ip
     
   
