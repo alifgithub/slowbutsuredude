@@ -202,6 +202,10 @@ ncat -lvnp 9001 > backup.7z
   - create bash shell on shell.txt, listen with nc
   try images magic rce
   /usr/bin/neofetch
-  
-    
+
+# Paper Machine:
+  collect the dns info
+  command injection on rocket chat (recyclops file ../../../../../proc/self/environ
+  linpeas -> secnigma vuln cve (got username&pass secnigma)
+  sudo -l -> sudo su -
   
