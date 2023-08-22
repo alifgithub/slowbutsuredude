@@ -208,4 +208,16 @@ ncat -lvnp 9001 > backup.7z
   command injection on rocket chat (recyclops file ../../../../../proc/self/environ
   linpeas -> secnigma vuln cve (got username&pass secnigma)
   sudo -l -> sudo su -
+
+# TImelaps Machine:
+  check with smbclient
+  pxf2john
+  crack zip file with johnsipper and rockyou
+  use evil-winrm -S -i ip -c key.cert -k key.pem
+  check psreadline and got the password, use crackmapexe to check smb (user svc_deploy)
+  Get-ADComputer -Filter 'ObjectClass -e "computer"' -Property *
+  
+  
+
+
   
