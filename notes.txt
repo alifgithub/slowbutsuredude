@@ -217,7 +217,12 @@ ncat -lvnp 9001 > backup.7z
   check psreadline and got the password, use crackmapexe to check smb (user svc_deploy)
   Get-ADComputer -Filter 'ObjectClass -e "computer"' -Property *
   
-  
-
-
+# Pandora Machine:
+  learn snmpwalk/snmpenum  
+  try: grep hrSWRun snmpwalk.1 |grep 1134/851
+  port forwarding
+  try: ps -ef
+  check sql injection in URL,
+  find the admin session, got the matt user shell
+  find pandora_backup for the priv esc
   
