@@ -29,6 +29,14 @@ ncat -lvnp 9001 > backup.7z
   sudo -l -> scriptmanager -> sudo -u scriptmanager /bin/sh
   check ls -la -> go to /script -> change the test.py to reverse shell -> got root!
 
+#vv Nibbles
+  check nmap result correctly, dirb again!
+  check exploit version, -> upload file
+  find admin.php or login panel -> try defaul cresd, admin/nibbles
+  upload reverse shell file to plugin my images, check on admin/private/myimages/image.php -> got user!
+  sudo -l Noo Root on monitor.sh
+  create reverse then embed to monitor.sh -> run it, got the root!
+
 #vv Sunday Machine:
   find finger exploit check : finger user@ip, enum: https://github.com/pentestmonkey/finger-user-enum/blob/master/finger-user-enum.pl
   change user sunny to sammy : check by /backup file, get hash then running hashcat, check the type of hash
