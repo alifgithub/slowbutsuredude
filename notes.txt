@@ -23,6 +23,12 @@ ncat -lvnp 9001 > backup.7z
   check vnc viewer on linpeas, OR
   check the command injection in User Agent
 
+#vv Bashed Machine:
+  find /dev using dirbuster
+  run php file and got the shell, go back to home/user.
+  sudo -l -> scriptmanager -> sudo -u scriptmanager /bin/sh
+  check ls -la -> go to /script -> change the test.py to reverse shell -> got root!
+
 #vv Sunday Machine:
   find finger exploit check : finger user@ip, enum: https://github.com/pentestmonkey/finger-user-enum/blob/master/finger-user-enum.pl
   change user sunny to sammy : check by /backup file, get hash then running hashcat, check the type of hash
