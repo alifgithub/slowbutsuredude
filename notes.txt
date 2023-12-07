@@ -17,12 +17,16 @@ ncat -lvnp 9001 > backup.7z
   login and check the version, search on searchploit then run!
   got the root!
 
-# Valentine Machine:
-  check the ssl vulnerability, got the ssh-hey
+#v Valentine Machine:
+  check nmap --script vuln, then got CVE the ssl vulnerability
+  dirb got /dev contain notes and hype.key
+  convert hex to ascii
+  found exploit script for get the password, decode with base64
+  login ssh -i .key hype@ip
   check the bash history: $ cat ~/.bash_history
   learn tmux -h
-
-# Poison Machine:
+  
+# Poison Machine: M
   check LFI vulnerability
   crack th e passwd backup
   check vnc viewer on linpeas, OR
@@ -53,23 +57,23 @@ ncat -lvnp 9001 > backup.7z
   create id_rsa using orestis data
   learn RSA decrypt 
 
-# Cronos Machine:
+# Cronos Machine: H
   check dns with nslookup, dig axfr
   do sql injection, then command injection 
   learn schedule service
 
-# Nineveh Machine:
+# Nineveh Machine: M
   check ssl cert
   try hydra
   command inject php
   check procmon service 
   
-# Solidstate Machine:
+# Solidstate Machine: M
   check nc to 4555
   learn dash service
   check james server vuln
 
-# Kotarak Machine:
+# Kotarak Machine: M
   check command injection
   upload shell 
   use impacket-secretdump
@@ -81,9 +85,10 @@ ncat -lvnp 9001 > backup.7z
   sudo -l
   check backuperer timer service
 
-# Blue Machine:
+#v Blue Machine:
   check port 445
-  exploit the ethernal blue
+  exploit the ethernal blue or ms17-010
+  use the exploit, got the authorize system!
 
 # Devel Machine:
   ftp login, upload aspx
