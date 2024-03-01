@@ -45,6 +45,13 @@ stty raw -echo; fg
 Then press Enter twice, and then enter:
 export TERM=xterm
 
+mySQL:
+show databases;
+use dbname;
+show tables;
+select * tbname;
+select username,password from tbname;
+
 Reverse Shell:
 https://pentestmonkey.net/
 revershell
