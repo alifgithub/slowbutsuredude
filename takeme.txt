@@ -36,6 +36,36 @@ $	ffuz -u domain -d "request" -w wordlist -H "header" (seclist/fuzz,specialchar)
 $	wpscan -e --url domain
 $ joomscan
 
+Windows enum:
+### Local Enumeration:
+whoami
+whoami /priv
+whoami /groups
+net users
+net user <name>
+net localgroup
+hostname
+systeminfo
+wmic qfe
+tasklists
+ipconfig /ALL
+sc query windefend
+netsh firewall show state
+
+### PowerView Command:
+Get-NetUser | select cn
+Get-NetGroup -GroupName *admin*
+Get-NetComputer -fulldata
+Get-DomainUser
+Invoke-EnumerateLocalAdmin
+Find-LocalAdminAccess
+Get-NetDomainController
+Get-DomainPolicy
+Get-NetDomain
+Invoke-ShareFinder
+Get-NetLoggedon -ComputerName Domain-Controller....
+Get-NetRDPSession -ComputerName
+
 Better shell:
 python3 -c "import pty;pty.spawn('/bin/bash')"
 
