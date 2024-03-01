@@ -39,6 +39,12 @@ $ joomscan
 Better shell:
 python3 -c "import pty;pty.spawn('/bin/bash')"
 
+script /dev/null -c /bin/bash
+CTRL + Z
+stty raw -echo; fg
+Then press Enter twice, and then enter:
+export TERM=xterm
+
 Reverse Shell:
 https://pentestmonkey.net/
 revershell
