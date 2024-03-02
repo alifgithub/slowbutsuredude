@@ -38,19 +38,19 @@ $ joomscan
 
 Windows enum:
 ### Local Enumeration:
-whoami
-whoami /priv
-whoami /groups
-net users
-net user <name>
-net localgroup
-hostname
-systeminfo
-wmic qfe
-tasklists
-ipconfig /ALL
-sc query windefend
-netsh firewall show state
+$ whoami
+$ whoami /priv
+$ whoami /groups
+$ net users
+$ net user <name>
+$ net localgroup
+$ hostname
+$ systeminfo
+$ wmic qfe
+$ tasklists
+$ ipconfig /ALL
+$ sc query windefend
+$ netsh firewall show state
 
 ### PowerView Command:
 Get-NetUser | select cn
@@ -67,13 +67,13 @@ Get-NetLoggedon -ComputerName Domain-Controller....
 Get-NetRDPSession -ComputerName
 
 Better shell:
-python3 -c "import pty;pty.spawn('/bin/bash')"
+$ python3 -c "import pty;pty.spawn('/bin/bash')"
 
-script /dev/null -c /bin/bash
+$ script /dev/null -c /bin/bash
 CTRL + Z
-stty raw -echo; fg
+$ stty raw -echo; fg
 Then press Enter twice, and then enter:
-export TERM=xterm
+$ export TERM=xterm
 
 mySQL:
 show databases;
@@ -85,6 +85,12 @@ select username,password from tbname;
 Reverse Shell:
 https://pentestmonkey.net/
 revershell
+
+Find Command Injection Vuln:
+{"username":"admin; ls -la #"}
+
+Find Email sender:
+$ less /var/mail/admin
 
 
 
