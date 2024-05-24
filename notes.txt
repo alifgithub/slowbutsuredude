@@ -26,6 +26,12 @@ ncat -lvnp 9001 > backup.7z
   chmod +x initdb.sh
   sudo /usr/bin/syscheck
 
+# Bizness Machine:
+  check dirb, got control/login
+  get info Ofbiz, framework. Find the CVE then run the exploit.
+  priv esc, find SHA on framework/resource/templates and runtime/data/derby database
+  crack SHA with golang or python, got the su password
+
 #v Valentine Machine:
   check nmap --script vuln, then got CVE the ssl vulnerability
   dirb got /dev contain notes and hype.key
