@@ -68,6 +68,8 @@ Get-NetRDPSession -ComputerName
 
 Better shell:
 $ python3 -c "import pty;pty.spawn('/bin/bash')"
+$ script /dev/null -qc /bin/bash
+$ stty raw -echo; fg; ls; export SHELL=/bin/bash; export TERM=screen; stty rows 38 columns 116; reset;
 
 $ script /dev/null -c /bin/bash
 CTRL + Z
