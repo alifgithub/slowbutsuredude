@@ -11,8 +11,12 @@ Port 21 FTP
 $ ftp ipadd
 $ info || put file.txt (cek info and put file)
 
+Port 25 SMTP
+Check service and version
+
 Port 445 Samba
 $ nmap -p 445 vuln -oA ipadd
+$ nmap --script=smb-vuln* -oN nmap/script_smbvuln -v --min-rate 10000 -p 139,445
 $ smbmap -H ipadd
 $ smbclient //ipadd/dir
 $ smbclient -L //IP -N
@@ -35,6 +39,11 @@ $	feroxbuster -u domain -x php -w wordlist -k
 $	ffuz -u domain -d "request" -w wordlist -H "header" (seclist/fuzz,specialchar)
 $	wpscan -e --url domain
 $ joomscan
+
+Port 199
+There’s a tool called “snmpwalk” 
+$ snmpwalk -c public -v1 -t 10 IP
+$ snmp-check IP
 
 Windows enum:
 ### Local Enumeration:
