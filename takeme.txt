@@ -18,6 +18,7 @@ Port 445 Samba
 $ nmap -p 445 vuln -oA ipadd
 $ nmap --script=smb-vuln* -oN nmap/script_smbvuln -v --min-rate 10000 -p 139,445
 $ smbmap -H ipadd
+$ smbmap -u '' -p '' -R -H 192.168.189.98
 $ smbclient //ipadd/dir
 $ smbclient -L //IP -N
 $ smbclient -N //IP/tmp -> dir, put
