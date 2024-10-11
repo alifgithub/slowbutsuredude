@@ -2,6 +2,7 @@
 $ sudo -l
 $ uname -a
 $ linpeas
+$ find / -group filter 2>dev/null
 
 * if you founf more domain or ip addresses, add to dns -> /etc/hosts
 
