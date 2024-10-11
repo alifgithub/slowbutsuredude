@@ -3,6 +3,11 @@
 * Run these for enummm! :
 $ autorecon ip
 
+$ rustscan -a IP -limit 5000
+$ cat << E0F > open-ports
+$ cat open-ports | cut -f1 -d '/' | tr '\n' ','
+$ nmap -p port -sC -sV
+
 Enum leak:
 services/version exploit
 services/version webshell plugin
@@ -13,8 +18,19 @@ $ ftp-ssl -z secure -z verify=0 -p ipadd
 $ ftp-ssl -z secure -z verify=0 -z cipher="$(openssl ciphers -tls1)" -p ipadd
 $ info || put file.txt (cek info and put file)
 
-Port 25 SMTP
+Port 25/110 SMTP
 Check service and version
+$ smtp-user-enum -U users.txt -t hostname
+$ telnet IP 25/110 OR nc -nv IP 25/110
+ - USER user
+ - PASS pass
+ - LIST
+ - RETR
+ - MAIL FROM:
+ - RCPT TO:
+ - DATA
+swaks command example:
+ $ swaks --to user@hostname --from it@hostname --header "Subject:password reset link" --body "Hey team, as discussed in our previous email, reset your passwords at http://kaliIP" --server targetIP
 
 Port 445 Samba
 $ nmap -p 445 vuln -oA ipadd
