@@ -108,24 +108,6 @@ $ dig CH TXT version.bind ip
 $ dig any domain @ip
 $ dig axfr domain@ip
 
-
-
-Windows enum:
-### Local Enumeration:
-$ whoami
-$ whoami /priv
-$ whoami /groups
-$ net users
-$ net user <name>
-$ net localgroup
-$ hostname
-$ systeminfo
-$ wmic qfe
-$ tasklists
-$ ipconfig /ALL
-$ sc query windefend
-$ netsh firewall show state
-
 ### PowerView Command:
 Get-NetUser | select cn
 Get-NetGroup -GroupName *admin*
@@ -144,6 +126,7 @@ Better shell:
 $ python3 -c "import pty;pty.spawn('/bin/bash')"
 $ script /dev/null -qc /bin/bash
 $ stty raw -echo; fg; ls; export SHELL=/bin/bash; export TERM=screen; stty rows 38 columns 116; reset;
+$ !/bin/sh
 
 $ script /dev/null -c /bin/bash
 CTRL + Z
