@@ -1,4 +1,9 @@
 * Check these for privesc! :
+
+-> check hidden file in . directory
++ .bash_history
++ .config
++ /var/log
 $ cat /etc/os-release
 $ cat /etc/passwd | cut =f1 -d:
 $ cat /etc/group
