@@ -251,10 +251,9 @@ $ /opt
 $ /etc/crontab
 $ /etc/cron.d
 
-
 *Find a file(?):
 $ exiftool -a file
 
-
-
-
+hostname & whoami & type local.txt & ipconfig
+$env:COMPUTERNAME; whoami; Get-Content .\local.txt; Get-NetIPConfiguration
+hostname & whoami & cat local.txt & ifconfig
